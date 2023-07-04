@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Registration Form</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="form-title">Employee Registration Form</h1>
+      <form action="#">
+        <div class="main-user-info">
+          <div class="user-input-box">
+            <label for="fullName">Full Name</label>
+            <input type="text"
+                    id="fullName"
+                    name="fullName"
+                    placeholder="Enter Full Name"/>
+          </div>
+          <div class="user-input-box">
+            <label for="username">Username</label>
+            <input type="text"
+                    id="username"
+                    name="username"
+                    placeholder="Enter Username"/>
+          </div>
+          <div class="user-input-box">
+            <label for="email">Email</label>
+            <input type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Enter Email"/>
+          </div>
+          <div class="user-input-box">
+            <label for="phoneNumber">Phone Number</label>
+            <input type="text"
+                    id="phoneNumber"
+                    name="phoneNumber"
+                    placeholder="Enter Phone Number"/>
+          </div>
+          <div class="user-input-box">
+            <label for="password">Password</label>
+            <input type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Enter Password"/>
+          </div>
+          <div class="user-input-box">
+            <label for="confirmPassword">Confirm Password</label>
+            <input type="password"
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    placeholder="Confirm Password"/>
+          </div>
+        </div>
+        <div class="gender-details-box">
+          <span class="gender-title">Gender</span>
+          <div class="gender-category">
+            <input type="radio" name="gender" id="male">
+            <label for="male">Male</label>
+            <input type="radio" name="gender" id="female">
+            <label for="female">Female</label>
+            <input type="radio" name="gender" id="other">
+            <label for="other">Other</label>
+          </div>
+        </div>
+        <button class="form-submit-btn">
+          <input type="submit" value="Register">
+        </button>
+      </form>
+    </div>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Get references to the form and form elements
+        var registrationForm = document.querySelector('form');
+        var fullNameInput = document.getElementById('fullName');
+        var usernameInput = document.getElementById('username');
+        var emailInput = document.getElementById('email');
+        var phoneNumberInput = document.getElementById('phoneNumber');
+        var passwordInput = document.getElementById('password');
+        var confirmPasswordInput = document.getElementById('confirmPassword');
+    
+        // Event listener for form submission
+        registrationForm.addEventListener('submit', function(event) {
+          // Prevent the form from submitting
+          event.preventDefault();
+    
+          // Perform form validation
+          var isValid = validateForm();
+    
+          // If form is valid, proceed with form submission
+          if (isValid) {
+            alert('Form submitted successfully!');
+            // You can add additional code here to submit the form data to a server
+          }
+        });
+    
+        // Function to validate the form
+        function validateForm() {
+          var isValid = true;
+    
+          // Clear any existing error messages
+          clearErrorMessages();
+    
+          // Validate full name
+          if (fullNameInput.value.trim() === '') {
+            displayErrorMessage(fullNameInput, 'Please enter your full name.');
+            isValid = false;
+          }
+    
+          // Validate username
+          if (usernameInput.value.trim() === '') {
+            displayErrorMessage(usernameInput, 'Please enter a username.');
+            isValid = false;
+          }
+    
+          // Validate email
+          var emailRegex = /^\S+@\S+\.\S+$/;
+          if (!emailRegex.test(emailInput.value.trim())) {
+            displayErrorMessage(emailInput, 'Please enter a valid email address.');
+            isValid = false;
+          }
+    
+          // Validate phone number
+          var phoneRegex = /^\d{10}$/;
+          if (!phoneRegex.test(phoneNumberInput.value.trim())) {
+            displayErrorMessage(phoneNumberInput, 'Please enter a 10-digit phone number.');
+            isValid = false;
+          }
+    
+          // Validate password
+          if (passwordInput.value.trim() === '') {
+            displayErrorMessage(passwordInput, 'Please enter a password.');
+            isValid = false;
+          }
+    
+          // Validate confirm password
+          if (confirmPasswordInput.value.trim() === '') {
+            displayErrorMessage(confirmPasswordInput, 'Please confirm your password.');
+            isValid = false;
+          } else if (confirmPasswordInput.value.trim() !== passwordInput.value.trim()) {
+            displayErrorMessage(confirmPasswordInput, 'Passwords do not match.');
+            isValid = false;
+          }
+    
+          return isValid;
+        }
+    
+        // Function to display an error message for a specific input field
+        function displayErrorMessage(inputElement, message) {
+            var errorContainer = document.createElement('div');
+            errorContainer.className = 'error-message';
+            errorContainer.textContent = message;
+            errorContainer.style.color = 'red'; // Add this line to set the color to red
+            inputElement.parentNode.appendChild(errorContainer);
+          }
+    
+        // Function to clear all error messages
+        function clearErrorMessages() {
+          var errorMessages = document.querySelectorAll('.error-message');
+          errorMessages.forEach(function(errorMessage) {
+            errorMessage.parentNode.removeChild(errorMessage);
+          });
+        }
+      });
+    </script>
+    
+  </body>
+</html>
